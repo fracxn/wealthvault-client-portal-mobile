@@ -1,100 +1,71 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import 'react-native-gesture-handler';
+
+import React, { useEffect, useState, useRef } from "react";
+import { NavigationContainer } from '@react-navigation/native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
+  Platform, BackHandler,
+  SafeAreaView, View,
+  ActivityIndicator, StyleSheet,
   useColorScheme,
-  View,
-} from 'react-native';
+  Text
+} from "react-native";
+import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redux/store'; // Adjust the path to your store file
+// import Constants from "expo-constants";
+// import NetInfo from "@react-native-community/netinfo";
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+import Router from './navigation/Router';
+import colors from "./theme/colors";
+import MainNavigator from "./navigation/MainNavigator";
+import Routes from "./navigation/Routes";
+import SplashScreen from "./screens/SplashScreen";
+import OnboardingScreen from "./screens/OnboardingScreen";
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const Stack = createStackNavigator();
+
+
+
+const App: React.FC<any> = ({ navigation }) => {
+  const theme = {
+    ...PaperDefaultTheme,
+    dark: false,
+    colors: {
+      ...PaperDefaultTheme.colors,
+      primary: colors.Primary.REGULAR,
+    },
   };
 
+
+
+  const isDarkMode = useColorScheme() === 'dark';
+
+
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <PaperProvider theme={theme}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}> 
+        <Router />
+      </PersistGate>
+    </Provider>
+    </PaperProvider>
   );
 }
+// <SafeAreaView style={backgroundStyle}>
+//   <StatusBar
+//     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+//     backgroundColor={backgroundStyle.backgroundColor}
+//   />
+
+
+// </SafeAreaView>
 
 const styles = StyleSheet.create({
   sectionContainer: {
