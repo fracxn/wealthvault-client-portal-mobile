@@ -43,22 +43,23 @@ const SignInScreen = ({ navigation }) => {
 
   const handleSignIn = async () => {
     console.log('password :>> ', password);
+    // console.log('response :>> ', {email, password}); 
     // event?.preventDefault();
 
     if (!validateInputs()) return
 
     setLoading(true)
-      const response = await post_login({
-        email: email,
-        password: password,
-      });
+    const response = await post_login({
+      email: email,
+      password: password,
+    });
 
 
       setLoading(false);
 
+      
       console.log('response :>> ', response);
-
-
+      
       if (response) {
         const data = response.data.data;
         

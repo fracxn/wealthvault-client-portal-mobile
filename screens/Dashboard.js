@@ -42,23 +42,23 @@ const Dashboard = ({ navigation }) => {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         originWhitelist={['*']}
-        injectedJavaScript={injectedJavaScript}
-        onNavigationStateChange={handleNavigationStateChange}
+        // injectedJavaScript={injectedJavaScript}
+        // onNavigationStateChange={handleNavigationStateChange}
         startInLoadingState={true}
         renderLoading={() => (
           <ActivityIndicator size="large" color="#3da4ab" style={styles.loading} />
         )}
         thirdPartyCookiesEnabled={true}
-        onError={(syntheticEvent) => {
-          console.log('WebView error:', syntheticEvent.nativeEvent);
-          navigateToLogin();
-        }}
-        onHttpError={({ nativeEvent }) => {
-          console.log('HTTP error:', nativeEvent);
-          if (nativeEvent.statusCode === 401) {
-            navigateToLogin();
-          }
-        }}
+        // onError={(syntheticEvent) => {
+        //   console.log('WebView error:', syntheticEvent.nativeEvent);
+        //   navigateToLogin();
+        // }}
+        // onHttpError={({ nativeEvent }) => {
+        //   console.log('HTTP error:', nativeEvent);
+        //   if (nativeEvent.statusCode === 401) {
+        //     navigateToLogin();
+        //   }
+        // }}
       />
     </View>
   );

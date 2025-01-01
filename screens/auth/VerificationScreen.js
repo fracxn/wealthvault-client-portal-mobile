@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { post_verify_login_2fa, auth } from "../../service/api";
 import Routes from '../../navigation/Routes';
+
 import { setAuth, setCurrentUser, } from '../../redux/authSlice';
 
 import {
@@ -16,7 +17,7 @@ const VerificationScreen = ({ navigation }) => {
   const [timer, setTimer] = useState(145); // 2:25 in seconds
   const { twoFaMethods, twoFaRecipient } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false); // Loading state for spinner
-
+  const inputRefs = useRef([])
   const dispatch = useDispatch();
 
   // Timer countdown for resend option
@@ -34,22 +35,26 @@ const VerificationScreen = ({ navigation }) => {
     console.log('newCode :>> ', newCode);
 
     // Automatically move to the next input if not the last one and value is filled
+    // if (value && index < 5) {
+    //   const nextInput = `input${index + 1}`;
+    //   this[nextInput]?.focus();
+    // }
     if (value && index < 5) {
-      const nextInput = `input${index + 1}`;
-      this[nextInput]?.focus();
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleKeyPress = (e, index) => {
     if (e.nativeEvent.key === 'Backspace' && verificationCode[index] === '' && index > 0) {
       // If the input is empty and backspace is pressed, move to the previous input
-      const prevInput = `input${index - 1}`;
-      this[prevInput]?.focus();
+      inputRefs.current[index - 1]?.focus();
 
       // Clear the previous input when backspace is pressed
       const newCode = [...verificationCode];
       newCode[index - 1] = '';
       setVerificationCode(newCode);
+    
+      
     }
   };
 
@@ -115,13 +120,13 @@ const VerificationScreen = ({ navigation }) => {
       <View style={styles.content}>
         <Text style={styles.title}>Verification sent</Text>
         <Text style={styles.description}>
-          We have sent a verification code to johnDoe@gmail.com. Please enter it below.
+          We have sent a verification code to 
+          {`${twoFaRecipient?.EMAIL ?? twoFaRecipient?.PHONE}`}. Please enter it below.
           If this isn't your email you can change it <Text style={styles.link}>here</Text>.
-        </Text>
-
+        </Text>   
         {/* Code Input Fields without box */}
         <View style={styles.codeContainer}>
-          {verificationCode.map((digit, index) => (
+          {verificationCode?.map((digit, index) => (
             <TextInput
               key={index}
               style={[styles.inputUnderline, error && styles.inputError]}
@@ -130,7 +135,8 @@ const VerificationScreen = ({ navigation }) => {
               onChangeText={(value) => handleVerificationCodeChange(value, index)}
               onKeyPress={(e) => handleKeyPress(e, index)}
               value={digit}
-              ref={(ref) => (this[`input${index}`] = ref)}
+              // ref={(ref) => (this[`input${index}`] = ref)}
+              ref={(ref) => (inputRefs.current[index] = ref)}
             />
           ))}
         </View>
@@ -254,5 +260,5 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 });
-345734
+
 export default VerificationScreen;
