@@ -30,6 +30,7 @@ const authSlice = createSlice({
       state.twoFaRecipient = recipient;
     },
     setCurrentUser: (state, action) => {
+      console.log("payload",action.payload)
       state.currentUser = action.payload;
     },
     clearAuth: (state) => {

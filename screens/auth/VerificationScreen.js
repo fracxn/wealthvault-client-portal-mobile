@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { post_verify_login_2fa, auth } from "../../service/api";
 import Routes from '../../navigation/Routes';
 
-import { setAuth, setCurrentUser, } from '../../redux/authSlice';
+import { setAuth, setCurrentUser } from '../../redux/authSlice';
 
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
@@ -77,29 +77,34 @@ const VerificationScreen = ({ navigation }) => {
     const response = await post_verify_login_2fa(code, twoFaMethods);
     if (response) {
       let data = response.data.data;
-      console.log('data method :>> ', data.method);
-      // dispatch(
-      //   setAuth({
-      //     accessToken: data.accessToken,
-      //     expiryTime: data.expiresAt,
-      //     refreshToken: data.refreshToken,
-      //     method: data.method,
-      //   })
-      // );
+      console.log('data method :>> ', data);
+      dispatch(
+        setAuth({
+          accessToken: data.accessToken,
+          expiryTime: data.expiresAt,
+          refreshToken: data.refreshToken,
+          method: data.method,
+        })
+      );
 
-      navigation.navigate(Routes.DASHBOARD);
+      
+      const authResponse = await auth();
+      if (authResponse) {
+        const authData = authResponse?.data?.data;
+        console.log('authResponse :>> ', authData);
+        dispatch(setCurrentUser(authData));
+        navigation.navigate(Routes.DASHBOARD);
+        // handleLoginSuccessful(authResponse);
+        return response;
+      } else {
+        // dispatch(setCurrentUser(null));
+      }
+      setLoading(false);
+    }else{
+      setLoading(false);
 
-      // const authResponse = await auth();
-      // if (authResponse) {
-      //   console.log('authResponse :>> ', authResponse);
-      //   const authData = authResponse.data.data;
-      //   dispatch(setCurrentUser(authData));
-      //   // handleLoginSuccessful(authResponse);
-      //   return response;
-      // } else {
-      //   dispatch(setCurrentUser(null));
-      // }
     }
+
     setLoading(false);
   };
 

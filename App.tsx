@@ -27,6 +27,7 @@ import MainNavigator from "./navigation/MainNavigator";
 import Routes from "./navigation/Routes";
 import SplashScreen from "./screens/SplashScreen";
 import OnboardingScreen from "./screens/OnboardingScreen";
+import { ToastProvider } from 'react-native-toast-notifications';
 
 const Stack = createStackNavigator();
 
@@ -52,7 +53,10 @@ const App: React.FC<any> = ({ navigation }) => {
     <PaperProvider theme={theme}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}> 
+      <ToastProvider  placement="top">
+
         <Router />
+      </ToastProvider>
       </PersistGate>
     </Provider>
     </PaperProvider>

@@ -95,6 +95,7 @@ const SignInScreen = ({ navigation }) => {
       else {
         dispatch(clearAuth());
       }
+      setLoading(false)
 
   };
 

@@ -1,3 +1,4 @@
+import {Toast} from "react-native-toast-notifications";
 
 
 type ErrorType =
@@ -48,8 +49,18 @@ const errorCode = {
 
 
 export const handleError = (error: any, type: ErrorType) => {
+  console.log(error?.response?.data)
+ 
   const errMsg = error?.response?.data?.message;
   const errCode = error?.response?.status;
 
+  Toast.show(errMsg ?? "Request fail", {
+    type: 'danger',
+    placement: 'top',
+    // duration: 4000,
+    // offset: 30,
+    // animationType: "slide-in | zoom-in",
+  });
   
+return null
 };
