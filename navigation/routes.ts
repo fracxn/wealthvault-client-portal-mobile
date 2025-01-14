@@ -35,7 +35,7 @@ export default {
     // ACCOUNT_EDIT: 'account-edit',
 
     AUTH: 'auth',
-    AUTH_SIGN_IN: 'auth-sign-in',
+    AUTH_SIGN_IN: 'SignIn',
     // AUTH_SIGN_UP: 'auth-sign-up',
 
 
@@ -45,7 +45,7 @@ export default {
     ALERT: 'ALERT',
     AUTH_VERIFICATION: 'auth_verification',
     TWOFACTORAUTHSCREEN: 'Two_factor_auth_screen',
-    DASHBOARD: 'dashboard',
+    DASHBOARD: 'Dashboard',
 
     SETTINGS: 'settings',
     PERSONALINFORMATION: 'PersonalInformation',

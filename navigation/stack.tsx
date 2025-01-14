@@ -11,20 +11,12 @@ import { useAuthenticated } from "../hooks/useAuthentication";
 import { ScreenConfig, useDynamicScreens } from "../hooks/useNavigatorScreen";
 import SignInScreen from "../screens/auth/login";
 import TwoFactorAuthScreen from "../screens/auth/TwoFactor";
+import VerificationScreen from "../screens/auth/Verification";
+import Dashboard from "../screens/dashboard";
 import OnboardingScreen from "../screens/onboarding";
 import { useHasSeenOnboarding, useUser } from "../store";
+import routes from "./routes";
 import { RootStackType } from "./types";
-// import { ResetPassword } from "../features/resetPassword";
-// import { NotificationScreen } from "../features/notifications";
-// import { useAuthenticated } from "../hooks/useAutheticated";
-// import { ProfileScreen } from "../features/profile";
-// import { LogDetails } from "../features/logs/components/LogDetails";
-
-
-// import { User, UserType } from "types";
-
-
-
 
 type ScreenNames = keyof RootStackType;
 
@@ -47,7 +39,7 @@ export const StackScreens = () => {
     },
 
     {
-      name: " SignIn",
+      name: routes.AUTH_SIGN_IN,
       component: SignInScreen,
       shouldRender: !isAuthenticated,
     },
@@ -57,15 +49,20 @@ export const StackScreens = () => {
     //   shouldRender: !isAuthenticated,
     // },
     {
-      name: "Two_factor_auth_screen",
+      name: routes.TWOFACTORAUTHSCREEN,
       component: TwoFactorAuthScreen,
       shouldRender: !isAuthenticated,
     },
-    // {
-    //   name: "VerifyOtp",
-    //   component: VerifyOtp,
-    //   shouldRender: !isAuthenticated,
-    // },
+    {
+      name: routes.AUTH_VERIFICATION,
+      component: VerificationScreen,
+      shouldRender: !isAuthenticated,
+    },
+    {
+      name: routes.DASHBOARD,
+      component: Dashboard,
+      shouldRender: isAuthenticated,
+    },
     // {
     //   name: "ResetPassword",
     //   component: ResetPassword,

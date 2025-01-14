@@ -13,7 +13,7 @@ import { RootStackScreenProps } from "../../navigation/types";
 import { baseReducer } from "../../store";
 import useMutate from "../../hooks/useMutation";
 import endpoints from "../../api/endpoints";
-import { Entypo, Feather, Ionicons } from "@expo/vector-icons";
+import {  Ionicons } from "@expo/vector-icons";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { ApiResponseError } from "../../types";

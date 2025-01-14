@@ -13,6 +13,8 @@ export type RootStackType = {
     SignUp: undefined;
     ForgotPassword: undefined;
     Two_factor_auth_screen: undefined;
+    Dashboard: undefined;
+    auth_verification: undefined;
     // ClientProfileScreen: undefined;
     ClientScreen: undefined;
     AuthSignIn: undefined;
