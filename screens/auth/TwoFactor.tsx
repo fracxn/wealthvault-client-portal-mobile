@@ -50,7 +50,7 @@ const TwoFactorAuthScreen = ({
     if (twoFaMethods.includes("EMAIL")) {
       setSelectedTab("Email");
       // setSelected(method)
-      console.log("twoFaMethods :>> ", twoFaMethods);
+    //   console.log("twoFaMethods :>> ", twoFaMethods);
       setInputValue(twoFaRecipient?.EMAIL || "");
     } else if (twoFaMethods.includes("PHONE")) {
       setSelectedTab("Phone");
@@ -61,7 +61,7 @@ const TwoFactorAuthScreen = ({
   const handleSendCode = async () => {
     try {
       const response = await mutateAsync({ type: twoFaMethods });
-      console.log("response :>> ", response.data);
+    //   console.log("response :>> ", response.data);
 
       if (response) {
         navigation.navigate(Routes.AUTH_VERIFICATION);

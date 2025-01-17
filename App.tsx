@@ -22,6 +22,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useProviderBuilder } from "./hooks/ProviderBuilder";
 import { ScreenNavigation } from "./navigation";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { useSetReset } from "./store";
 // import { ToastProvider } from './components/Toast';
 
 const queryClient = new QueryClient();
@@ -44,6 +45,10 @@ export default function App() {
     Inter_700Bold,
     Inter_900Black,
   });
+
+  const reset = useSetReset()
+
+// reset()
 
   // useEffect(() => {
   //   async function onFetchUpdateAsync() {
@@ -81,7 +86,7 @@ export default function App() {
       ToastProvider,
       {
         placement: "top",
-        successColor: "#F7FCFA",
+        successColor: "#7ED957",
         dangerColor: "#DE350B",
         warningIcon: <Entypo name="warning" color="white" size={24} />,
         dangerIcon: (

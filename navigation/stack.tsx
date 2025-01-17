@@ -9,6 +9,7 @@
 // import { CheckEmail, DayOff, EarningsScreen, Login, SignUp, TimeOff, VerifyOtp } from "../features";
 import { useAuthenticated } from "../hooks/useAuthentication";
 import { ScreenConfig, useDynamicScreens } from "../hooks/useNavigatorScreen";
+import ForgotPassword from "../screens/auth/ForgotPassword";
 import SignInScreen from "../screens/auth/login";
 import TwoFactorAuthScreen from "../screens/auth/TwoFactor";
 import VerificationScreen from "../screens/auth/Verification";
@@ -63,11 +64,11 @@ export const StackScreens = () => {
       component: Dashboard,
       shouldRender: isAuthenticated,
     },
-    // {
-    //   name: "ResetPassword",
-    //   component: ResetPassword,
-    //   shouldRender: !isAuthenticated,
-    // },
+    {
+      name: routes.FORGOTPASSWORD,
+      component: ForgotPassword,
+      shouldRender: !isAuthenticated,
+    },
     // {
     //   name: "Home",
     //   component: DashboardTab,

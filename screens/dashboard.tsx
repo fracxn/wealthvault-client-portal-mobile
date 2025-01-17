@@ -1,5 +1,11 @@
-import React, { useRef } from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import WebView, { WebViewMessageEvent, WebViewNavigation } from "react-native-webview";
 
 import Routes from "../navigation/routes";
@@ -15,9 +21,9 @@ const Dashboard = ({
     baseReducer.getState();
   const currentUser = useUser();
   const toast = useToast();
-  // const currentUser = useSelector((state) => state.);
-  formatLog(currentUser);
-  console.log("current", accessToken);
+  const [refreshing, setRefreshing] = useState(false);
+  const [webViewKey, setWebViewKey] = useState(0);
+
   const mobileState = {
     user: {
       auth: {
@@ -32,7 +38,19 @@ const Dashboard = ({
     },
   };
 
-  console.log(mobileState);
+   const onRefresh = () => {
+     setRefreshing(true);
+
+     // Reload the WebView by updating its key
+     setWebViewKey((prevKey) => prevKey + 1);
+
+     // Simulate a delay for refresh (to mimic API behavior)
+     setTimeout(() => {
+       setRefreshing(false);
+     }, 1000);
+   };
+
+//   console.log(mobileState);
   // const dashboardUrl = `http://10.0.2.2:3000`;
 //   const dashboardUrl = `http://10.0.2.2:3000/dashboard?data=${encodeURIComponent(JSON.stringify(mobileState))}`;
 //   const dashboardUrl = `http://10.0.2.2:3000/dashboard?refreshToken=${refreshToken}&method=${method}&accessToken=${accessToken}&expiresAt=${expiresAt}`;
@@ -61,7 +79,7 @@ const Dashboard = ({
 
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
     const { url } = navState;
-    console.log("Navigated to:", url); // Debugging URL changes
+    // console.log("Navigated to:", url); // Debugging URL changes
       if (url.includes("/login")) {
         setReset()
       navigateToLogin();
@@ -80,7 +98,12 @@ const Dashboard = ({
   `;
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={{ flex: 1, paddingTop:40 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      >
       <WebView
         ref={webViewRef}
         source={{
@@ -114,13 +137,14 @@ const Dashboard = ({
         // }}
         // onLoadEnd={()=>sendStateToWeb(webViewRef)}
       />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 40,
   },
   loading: {
     position: "absolute",

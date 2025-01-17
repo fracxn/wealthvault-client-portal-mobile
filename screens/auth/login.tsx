@@ -203,7 +203,7 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"SignIn">) => {
           </TouchableOpacity>
           <Text style={styles.checkboxLabel}>Remember me</Text>
         </View>
-        <TouchableOpacity className="ml-1">
+        <TouchableOpacity className="ml-1" onPress={()=> navigation.navigate(Routes.FORGOTPASSWORD)}>
           <Text style={styles.forgotPassword}>Forgot Password</Text>
         </TouchableOpacity>
       </View>

@@ -2,6 +2,7 @@
   "expo": {
     "name": "wealthvault-mobile",
     "slug": "wealthvault-mobile",
+    "owner": "fracxn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/appicon.png",
@@ -13,17 +14,24 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fracxn.wealthvaultmobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fracxn.wealthvaultmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a0ca76bc-a319-4dbd-832b-cc314f94b1e2"
+      }
     }
   }
 }
