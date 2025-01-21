@@ -11,19 +11,18 @@ import {
   Inter_900Black,
 } from "@expo-google-fonts/inter";
 import * as SplashScreen from "expo-splash-screen";
-// import * as Updates from "expo-updates";
+import * as Updates from "expo-updates";
 import { useCallback, useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ToastProvider } from "react-native-toast-notifications";
 import * as Notifications from "expo-notifications";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { usePushNotification } from "@hooks/usePushNotification";
 import { NavigationContainer } from "@react-navigation/native";
 import { useProviderBuilder } from "./hooks/ProviderBuilder";
 import { ScreenNavigation } from "./navigation";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
-import { useSetReset } from "./store";
-// import { ToastProvider } from './components/Toast';
+
+
 
 const queryClient = new QueryClient();
 
@@ -46,27 +45,25 @@ export default function App() {
     Inter_900Black,
   });
 
-  const reset = useSetReset()
+ 
 
-// reset()
+  useEffect(() => {
+    async function onFetchUpdateAsync() {
+      try {
+        const update = await Updates.checkForUpdateAsync();
 
-  // useEffect(() => {
-  //   async function onFetchUpdateAsync() {
-  //     try {
-  //       const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (error) {
+        // You can also add an alert() to see the error message in case of an error when fetching updates.
+        // alert(`Error fetching latest Expo update: ${error}`);
+      }
+    }
 
-  //       if (update.isAvailable) {
-  //         await Updates.fetchUpdateAsync();
-  //         await Updates.reloadAsync();
-  //       }
-  //     } catch (error) {
-  //       // You can also add an alert() to see the error message in case of an error when fetching updates.
-  //       // alert(`Error fetching latest Expo update: ${error}`);
-  //     }
-  //   }
-
-  //   onFetchUpdateAsync();
-  // }, []);
+    onFetchUpdateAsync();
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
